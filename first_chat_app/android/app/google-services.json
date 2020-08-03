@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "163980044555",
+    "firebase_url": "https://chatapp-3c4fa.firebaseio.com",
+    "project_id": "chatapp-3c4fa",
+    "storage_bucket": "chatapp-3c4fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163980044555:android:d0a949f15d265bff5e1a0e",
+        "android_client_info": {
+          "package_name": "com.zaired.first_chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163980044555-8fvalc84kd9f2ugedoee1426a5bhmr5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS2T3BRh4wcxpQ1aZ3jlArneJXFuoZqPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "163980044555-8fvalc84kd9f2ugedoee1426a5bhmr5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
