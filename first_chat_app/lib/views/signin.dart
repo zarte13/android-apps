@@ -8,6 +8,11 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+
+  TextEditingController emailEditingController = new TextEditingController();
+  TextEditingController passwordEditingController = new TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +30,12 @@ class _SignInState extends State<SignIn> {
 
                 TextField(
                   style: simpleTextStyle(16),
+                  controller: emailEditingController,
                   decoration: textFieldInputDecoration('email'),),
                 TextField(
                   style: simpleTextStyle(16),
                   decoration: textFieldInputDecoration('password'),
+                  controller: passwordEditingController,
                 ),
                 SizedBox(height: 8,),
                 Container(
