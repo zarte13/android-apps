@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_chat_app/modal/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthMethods{
 

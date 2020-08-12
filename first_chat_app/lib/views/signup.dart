@@ -1,5 +1,9 @@
+import 'package:first_chat_app/services/auth.dart';
 import 'package:first_chat_app/widgets/widget.dart';
 import 'package:flutter/material.dart';
+
+
+
 
 class SignUp extends StatefulWidget {
   @override
@@ -12,6 +16,8 @@ class _SignUpState extends State<SignUp> {
 
   final formKey = GlobalKey<FormState>();
 
+  AuthMethods authMethods = new AuthMethods();
+
   TextEditingController userNameEditingController = new TextEditingController();
   TextEditingController emailEditingController = new TextEditingController();
   TextEditingController passwordEditingController = new TextEditingController();
@@ -20,6 +26,9 @@ class _SignUpState extends State<SignUp> {
     if(formKey.currentState.validate()){
       setState(() {
         isLoading = true;
+      });
+      authMethods.signUpwithEmailAndPassword(emailEditingController.text, passwordEditingController.text).then((val){
+        print('$val');
       });
 
     }
