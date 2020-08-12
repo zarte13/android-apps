@@ -8,9 +8,17 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
 
+  final formKey = GlobalKey<FormState>();
+
   TextEditingController userNameEditingController = new TextEditingController();
   TextEditingController emailEditingController = new TextEditingController();
   TextEditingController passwordEditingController = new TextEditingController();
+
+  signMeUp(){
+    if(formKey.currentState.validate()){
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +34,37 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                TextField(
-                  controller: userNameEditingController,
-                  style: simpleTextStyle(16),
-                  decoration: textFieldInputDecoration('username'),
-                ),
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        validator: (val){
+                          return val.isEmpty || val.contains(' ')|| val.length<2 ? 'Please provide a valid username':null;
+                        },
+                        controller: userNameEditingController,
+                        style: simpleTextStyle(16),
+                        decoration: textFieldInputDecoration('username'),
+                      ),
 
-                TextField(
-                  controller: emailEditingController,
-                  style: simpleTextStyle(16),
-                  decoration: textFieldInputDecoration('email'),),
-                TextField(
-                  controller: passwordEditingController,
-                  style: simpleTextStyle(16),
-                  decoration: textFieldInputDecoration('password'),
+                      TextFormField(
+                        controller: emailEditingController,
+                        validator: (val){
+                          return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val) ?  null : 'Please provide a email address';
+                        },
+                        style: simpleTextStyle(16),
+                        decoration: textFieldInputDecoration('email'),),
+                      TextFormField(
+                        controller: passwordEditingController,
+                        obscureText: true,
+                        style: simpleTextStyle(16),
+                        decoration: textFieldInputDecoration('password'),
+                        validator: (val){
+                          return val.length < 6? 'Please provide longer password': val.contains(' ')?'Space is not a valid character':null;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 8,),
                 Container(
@@ -50,20 +75,26 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 SizedBox(height: 8,),
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [
-                          const Color(0xff007EF4),
-                          const Color(0xff2A75BC)
-                        ]
+                GestureDetector(
+                  onTap: (){
+                    signMeUp();
+
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [
+                            const Color(0xff007EF4),
+                            const Color(0xff2A75BC)
+                          ]
+                      ),
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    borderRadius: BorderRadius.circular(30),
+                    child: Text('Sign Up', style: simpleTextStyle(17),),
                   ),
-                  child: Text('Sign Up', style: simpleTextStyle(17),),
                 ),
                 SizedBox(height: 16,),
                 Container(
