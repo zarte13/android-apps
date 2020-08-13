@@ -1,23 +1,55 @@
+import 'package:first_chat_app/services/auth.dart';
+import 'package:first_chat_app/views/chatroom_screen.dart';
 import 'package:first_chat_app/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
 
 class SignIn extends StatefulWidget {
+  final Function toggle;
+  SignIn(this.toggle);
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
 
+  bool isLoading = false;
+
+  final formKey = GlobalKey<FormState>();
+
+  AuthMethods authMethods = new AuthMethods();
+
   TextEditingController emailEditingController = new TextEditingController();
   TextEditingController passwordEditingController = new TextEditingController();
+
+  signMeIn(){
+    if(formKey.currentState.validate()){
+      setState(() {
+        isLoading = true;
+      });
+      authMethods.signInWithEmailAndPassword(emailEditingController.text, passwordEditingController.text).then((val){
+        print('$val');
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChatRoom()));
+      });
+
+    }
+  }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarMain(context),
-      body: SingleChildScrollView(
+      appBar: appBarMain(context, true),
+
+      body: isLoading? Container(
+        child: Center(child: SizedBox(
+          width: 150,
+          height: 150,
+                  child: CircularProgressIndicator(
+            strokeWidth: 10,
+          ),
+        )),
+      ) :SingleChildScrollView(
 
         child: Container(
           alignment: Alignment.bottomCenter,
@@ -28,14 +60,29 @@ class _SignInState extends State<SignIn> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
 
-                TextField(
-                  style: simpleTextStyle(16),
-                  controller: emailEditingController,
-                  decoration: textFieldInputDecoration('email'),),
-                TextField(
-                  style: simpleTextStyle(16),
-                  decoration: textFieldInputDecoration('password'),
-                  controller: passwordEditingController,
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        style: simpleTextStyle(16),
+                        controller: emailEditingController,
+                        decoration: textFieldInputDecoration('email'),
+                        validator: (val){
+                          return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val) ?  null : 'Please provide a email address';
+                        },
+                        ),
+                      TextFormField(
+                        style: simpleTextStyle(16),
+                        decoration: textFieldInputDecoration('password'),
+                        controller: passwordEditingController,
+                        obscureText: true,
+                        validator: (val){
+                                return val.length < 6 || val.contains(' ')? 'Please provide a valid password':null;
+                              },
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 8,),
                 Container(
@@ -46,20 +93,25 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 SizedBox(height: 8,),
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        const Color(0xff007EF4),
-                        const Color(0xff2A75BC)
-                      ]
+                GestureDetector(
+                  onTap: (){
+                    signMeIn();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          const Color(0xff007EF4),
+                          const Color(0xff2A75BC)
+                        ]
+                      ),
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    borderRadius: BorderRadius.circular(30),
+                    child: Text('Sign In', style: simpleTextStyle(17),),
                   ),
-                  child: Text('Sign In', style: simpleTextStyle(17),),
                 ),
                 SizedBox(height: 16,),
                 Container(
@@ -85,14 +137,23 @@ class _SignInState extends State<SignIn> {
                       style: simpleTextStyle(17),
 
                     ),
-                    Text(
-                      'Register Now',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        decoration: TextDecoration.underline,
-                      ),
+                    GestureDetector(
+                      onTap: (){
+                        widget.toggle();
+                      },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                          'Register Now',
+                          
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            decoration: TextDecoration.underline,
+                          ),
 
+                      ),
+                        ),
                     ),
                   ],
                 ),

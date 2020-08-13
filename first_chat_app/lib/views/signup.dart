@@ -1,6 +1,5 @@
 import 'package:first_chat_app/services/auth.dart';
-import 'package:first_chat_app/views/conversation_screen.dart';
-import 'package:first_chat_app/views/signin.dart';
+import 'package:first_chat_app/views/chatroom_screen.dart';
 import 'package:first_chat_app/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +7,8 @@ import 'package:flutter/material.dart';
 
 
 class SignUp extends StatefulWidget {
+  final Function toggle;
+  SignUp(this.toggle);
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -40,7 +41,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarMain(context),
+      appBar: appBarMain(context, true),
       body: isLoading? Container(
         child: Center(child: SizedBox(
           width: 150,
@@ -147,18 +148,21 @@ class _SignUpState extends State<SignUp> {
                     ),
                     GestureDetector(
                       onTap: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
+                        widget.toggle();
                       },
-                                          child: Text(
-                        'Sign in',
-                        
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          decoration: TextDecoration.underline,
-                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                          'Sign in',
+                          
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            decoration: TextDecoration.underline,
+                          ),
 
                       ),
+                        ),
                     ),
                   ],
                 ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 
-Widget appBarMain(BuildContext context){
+Widget appBarMain(BuildContext context, bool center){
   return AppBar(
     title: Image.asset("assets/images/logo.png", height: 40),
-    centerTitle: true,
+    centerTitle: center,
 
   );
 }
