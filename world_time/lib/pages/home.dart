@@ -34,25 +34,7 @@ class _HomeState extends State<Home> {
     //set background
     String bgImage = data['isDaytime'] ? 'downloadedit.png' : 'download2edit.png';
     Color bgColor = data['isDaytime'] ? Colors.blue[600] : Colors.blueGrey[800];
-    Timer _timer;
 
-
-
-
-
-    void _refreshWorldTime()  {
-      setState(() {
-
-        WorldTime instance = data['index'];
-        instance.getTime();
-
-        _timer = Timer(
-          Duration(minutes: 1),
-          _refreshWorldTime,
-        );
-
-      });
-    }
 
 
 

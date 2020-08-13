@@ -1,4 +1,6 @@
 import 'package:first_chat_app/services/auth.dart';
+import 'package:first_chat_app/views/conversation_screen.dart';
+import 'package:first_chat_app/views/signin.dart';
 import 'package:first_chat_app/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +30,8 @@ class _SignUpState extends State<SignUp> {
         isLoading = true;
       });
       authMethods.signUpwithEmailAndPassword(emailEditingController.text, passwordEditingController.text).then((val){
-        print('$val');
+        print('$val.uid');
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChatRoom()));
       });
 
     }
@@ -43,7 +46,7 @@ class _SignUpState extends State<SignUp> {
           width: 150,
           height: 150,
                   child: CircularProgressIndicator(
-            strokeWidth: 8,
+            strokeWidth: 10,
           ),
         )),
       ) :SingleChildScrollView(
@@ -142,14 +145,20 @@ class _SignUpState extends State<SignUp> {
                       style: simpleTextStyle(17),
 
                     ),
-                    Text(
-                      'Sign in',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        decoration: TextDecoration.underline,
-                      ),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignIn()));
+                      },
+                                          child: Text(
+                        'Sign in',
+                        
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          decoration: TextDecoration.underline,
+                        ),
 
+                      ),
                     ),
                   ],
                 ),
